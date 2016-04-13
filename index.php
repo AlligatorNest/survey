@@ -29,6 +29,7 @@ if($_POST && isset($_POST['action']))
     $lang02 = $_POST["lang02"];
     $lang03 = $_POST["lang03"];
     $lang04 = $_POST["lang04"];
+    $newPatients = $_POST["newPatients"];
     $phone_1 = $_POST["phone_1"];
     $phone_1_info = $_POST["phone_1_info"];
     $email = $_POST["email"];
@@ -49,6 +50,7 @@ if($_POST && isset($_POST['action']))
     'lang02' => $lang02,
     'lang03' => $lang03,
     'lang04' => $lang04,
+    'newPatients' => $newPatients,
     'phone_1' => $phone_1,
     'phone_1_info' => $phone_1_info,
     'email' => $email,
@@ -200,6 +202,25 @@ require_once ("assets/includes/header.php");
                   </label>
                 </div>
               </div>
+
+              <label class="col-sm-2">Welcoming New Patients</label>
+              <div class="col-sm-2">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="newPatients" id="newPatients1" value="Y" <?=$providerData['newPatients'] == 'Y' ? 'checked' : '';?>>
+                    Yes
+                  </label>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="radio">
+                  <label>
+                    <input type="radio" name="newPatients" id="newPatients2" value="N" <?=$providerData['newPatients'] == 'N' ? 'checked' : '';?>>
+                    No
+                  </label>
+                </div>
+              </div>
+
             </div>
 
             <div class="form-group row">
@@ -258,7 +279,7 @@ require_once ("assets/includes/header.php");
 
             <div class="form-group row">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-secondary">Confirm</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
               </div>
             </div>
           </form>
