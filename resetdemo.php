@@ -32,7 +32,7 @@ if(!$db) die("Database error");
 $db->setTrace(true);
 $tables = Array (
     'providerData' => Array (
-        'providerDataId' => 'int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (userId)',
+        'providerDataId' => 'int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY (providerDataId)',
         'prov_no' => 'varchar(12) NOT NULL ',
         'first_name' => 'varchar(14) NOT NULL ',
         'last_name' => 'varchar(36) NOT NULL ',
@@ -61,7 +61,7 @@ $tables = Array (
 
 );
 $data = Array (
-    'users' => Array (
+    'providerData' => Array (
         Array ('prov_no' => '100087629',
                'first_name' => 'ALEXANDER',
                'last_name' => 'NAVARRO',

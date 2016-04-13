@@ -6,59 +6,20 @@ require_once ("assets/database/dbconnect.php");
 
 
 //get current userid
-$userid = 1;
+$prov_no= '100087629';
 
 //get current username
+/*
 $db->where ("userId", $userid);
 $user = $db->getOne ("tblusers");
 $username = $user['username'];
+*/
 
-//get categries for userid
-$params = Array($userid);
-$q = "(
-SELECT c.category
-FROM tblusers u
-INNER JOIN tblusercategoryxref ucX ON u.userId = ucx.userId
-INNER JOIN tblcategory c ON ucx.categoryId = c.categoryId
-WHERE u.userId = ?
-)";
-$categories = $db->rawQuery ($q, $params);
+//get details for provider
+$db->where ("prov_no", $prov_no);
+$providerData = $db->getOne ("tblproviderdata");
 
-// get available documents for this userid BY CATEGORY
-$params = Array($userid,$userid);
-$q = "(
-SELECT DISTINCT d.documentName,d.documentId
-FROM tblusers u
-INNER JOIN tblusercategoryxref ucX ON u.userId = ucx.userId
-INNER JOIN tblcategory c ON ucx.categoryId = c.categoryId
-INNER JOIN tbldocumentcategoryxref dcx on c.categoryId = dcx.categoryId
-INNER JOIN tbldocument d on dcx.documentId = d.documentId
-WHERE d.documentId not in (SELECT documentid from tbldocumentuseraccess where userID = ?) AND
-u.userId = ?
-)";
-$documents = $db->rawQuery ($q, $params);
-$downloadCount = $db->count;
 
-// get available documents for this userid BY USERID
-// these are documents assigned to particular user
-$params = Array($userid,$userid);
-$q = "(
-SELECT DISTINCT d.documentName,d.documentId
-FROM tblusers u
-INNER JOIN tbldocumentuserxref dux on u.userId = dux.userId
-INNER JOIN tbldocument d on dux.documentId = d.documentId
-WHERE d.documentId not in (SELECT documentid from tbldocumentuseraccess where userID = ?) AND
-u.userId = ?
-)";
-$userdocuments = $db->rawQuery ($q, $params);
-
-$downloadCount += $db->count;
-
-if ($downloadCount > 0) {
-  $msg = "You have " . $downloadCount . " new documents available for download!";
-} else {
-  $msg = "You have no new documents available for download";
-};
 
 //html page header and menu
 require_once ("assets/includes/header.php");
@@ -69,45 +30,114 @@ require_once ("assets/includes/header.php");
     <div class="container">
 
       <div class="page-header">
-        <h1>Current User: <?php echo $username ?></h1>
-
-        <p><strong>Categories</strong>:
-        <?php
-        $str = '';
-        foreach ($categories as $category) {
-            $str.= $category['category'] .',';
-        }
-        $str = rtrim($str, ',');
-        echo $str;
-         ?>
-       </p>
-
+        <h3>Current User: <?php echo $providerData['first_name'] . ' ' . $providerData['last_name']; ?></h3>
       </div>
 
-      <p class="lead"><?php echo $msg?></p>
-      <p>Documents Specific to these Categories:</p>
-      <hr>
+      <p class="lead">Provider Details</p>
       <div class="container">
-      <?php
-      foreach ($documents as $document){
-        echo '<div class="row">';
-        echo '<div class="col-xs-4">' .$document['documentName'] . '</div><div class="col-xs-8">' . '<input id="' . $document['documentId'] . ',' . $userid . '" type="button" name="download" value="Download"> </div>';
-        echo '</div>';
-      }
-      ?>
-      </div>
 
-      <hr>
-      <p>Documents Specific to this User:</p>
-      <hr>
-      <div class="container">
-      <?php
-      foreach ($userdocuments as $userdocument){
-        echo '<div class="row">';
-        echo '<div class="col-xs-4">' .$userdocument['documentName'] . '</div><div class="col-xs-8">' . '<input id="' . $userdocument['documentId'] . ',' . $userid . '" type="button" name="download" value="Download"> </div>';
-        echo '</div>';
-      }
-      ?>
+
+          <form class="form">
+            <div class="form-group row">
+              <label for="first_name" class="col-sm-2 form-control-label">First Name</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="first_name" id="first_name" value="<?php echo $providerData['first_name']?>" placeholder="First Name">
+              </div>
+
+              <label for="last_name" class="col-sm-2 form-control-label">Last Name</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $providerData['last_name']?>" placeholder="Last Name">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="sex" class="col-sm-2 form-control-label">Gender</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="sex" id="sex" value="<?php echo $providerData['sex']?>" placeholder="Gender">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="address1" class="col-sm-2 form-control-label">Address</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="address1" id="address1" value="<?php echo $providerData['address1']?>" placeholder="Address 1">
+              </div>
+
+              <label for="address2" class="col-sm-2 form-control-label">Address 2</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="address2" id="address2" value="<?php echo $providerData['address1']?>" placeholder="Address 2">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="city" class="col-sm-2 form-control-label">City</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="city" id="city" value="<?php echo $providerData['city']?>" placeholder="City">
+              </div>
+
+              <label for="state" class="col-sm-2 form-control-label">State</label>
+              <div class="col-sm-2">
+                <select class="form-control" name="state" id="state">
+                  <option>Select One</option>
+                  <option value="LA" selected="true">Louisiana</option>
+                </select>
+              </div>
+
+              <label for="zip" class="col-sm-2 form-control-label">Zip Code</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="zip" id="zip" value="<?php echo $providerData['zip']?>" placeholder="Zip Code">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="phone_1" class="col-sm-2 form-control-label">Phone 1:</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="phone_1" id="phone_1" value="<?php echo $providerData['zip']?>" placeholder="Primary Phone Number">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="email" class="col-sm-2 form-control-label">Email:</label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" name="email" id="email" value="<?php echo $providerData['email']?>" placeholder="Email Address">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="website" class="col-sm-2 form-control-label">Web Site URL:</label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon">http://</span>
+                  <input type="text" class="form-control" name="website" id="website" value="<?php echo $providerData['website']?>" placeholder="Web Site URL">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2">Handicap Accessible</label>
+              <div class="col-sm-10">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="handicapAccessible" id="handicapAccessible1" value="Y" checked>
+                    Yes
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="handicapAccessible" id="handicapAccessible2" value="N">
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="form-group row">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-secondary">Confirm</button>
+              </div>
+            </div>
+          </form>
       </div>
 
     </div>
@@ -117,33 +147,3 @@ require_once ("assets/includes/header.php");
     //html page footer
     require_once ("assets/includes/footer.php");
     ?>
-
-    <!-- Script to capture document downloaded. -->
-    <script>
-    $(document).ready(function() {
-        $('[name="download"]').click(function() {
-
-            //get documentid and user id (documentId,userId)
-            var $strId = this.id;
-            //split on comma
-            var $ary = $strId.split(',');
-
-            var $documentId = $ary[0];
-            var $userId = $ary[1];
-
-            //ajax post to script to record download
-            var request = $.ajax({
-              url: "process.php",
-              type: "POST",
-              data: {action: "download", userId : $userId, documentId : $documentId},
-              dataType: "html",
-              success: function(data) {
-                  //alert(data);
-                  location.reload();
-              }
-            });
-
-
-        });
-    });
-    </script>
