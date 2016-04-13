@@ -25,29 +25,15 @@ if($_POST && isset($_POST['action']))
     $city = $_POST["city"];
     $state = $_POST["state"];
     $zip = $_POST["zip"];
+    $lang01 = $_POST["lang01"];
+    $lang02 = $_POST["lang02"];
+    $lang03 = $_POST["lang03"];
+    $lang04 = $_POST["lang04"];
     $phone_1 = $_POST["phone_1"];
     $phone_1_info = $_POST["phone_1_info"];
     $email = $_POST["email"];
     $website = $_POST["website"];
     $handicapAccessible = $_POST["handicapAccessible"];
-
-
-    //get selected languages
-    $langAry = array();
-    if (isset($_POST['lang'])) {
-
-      $lang=$_POST["lang"];
-      $i = 1;
-
-      if ($lang)
-      {
-          foreach ($lang as $value)
-          {
-              $langAry['lang0'.$i] = $value;
-              $i++;
-          };
-      };
-    };
 
 
     $data = Array (
@@ -59,23 +45,27 @@ if($_POST && isset($_POST['action']))
     'city' => $city,
     'state' => $state,
     'zip' => $zip,
+    'lang01' => $lang01,
+    'lang02' => $lang02,
+    'lang03' => $lang03,
+    'lang04' => $lang04,
     'phone_1' => $phone_1,
     'phone_1_info' => $phone_1_info,
     'email' => $email,
     'website' => $website,
-    'handicapAccessible' => $handicapAccessible
+    'handicapAccessible' => $handicapAccessible,
+    'moddate' => $db->now()
     );
-
-    //add selected languages to insert array
-    foreach ($langAry as $k => $v) {
-        $data[$k] = $v;
-    }
 
 
     //update the record
     $db->where ('prov_no', $prov_no);
     if ($db->update ('tblproviderdata', $data))
-        $msg =  $db->count . ' records were updated';
+        if ($db->count > 0) {
+        $msg = 'Your Profile has been updated.';
+      } else {
+        $msg = 'Thank you for reviewing your profile.';
+      }
     else
         $msg = 'update failed: ' . $db->getLastError();
   };
@@ -214,33 +204,54 @@ require_once ("assets/includes/header.php");
 
             <div class="form-group row">
               <label for="languages" class="col-sm-2 form-control-label">Languages:</label>
-              <div class="col-sm-4">
+              <div class="col-sm-2">
                 <div class="input-group">
-                  <select multiple class="form-control" name="lang[]" id="lang[]">
-                    <option value="EN">English</option>
-                    <option value="SP">Spanish</option>
-                    <option value="GR">German</option>
+                  <p class="help-block">Language 1</p>
+                  <select class="form-control" name="lang01" id="lang01">
+                    <option value="">Select</option>
+                    <option value="EN" <?=$providerData['lang01'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                    <option value="SP" <?=$providerData['lang01'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                    <option value="GR" <?=$providerData['lang01'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
                   </select>
-                  <p class="help-block">Hold down CTRL Key to select multiple.</p>
                 </div>
               </div>
 
               <div class="col-sm-2">
-                    <label for="selected_languages" class="col-sm-2 form-control-label">Selected Languages:</label>
+                <div class="input-group">
+                  <p class="help-block">Language 2</p>
+                  <select class="form-control" name="lang02" id="lang02">
+                    <option value="">Select</option>
+                    <option value="EN" <?=$providerData['lang02'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                    <option value="SP" <?=$providerData['lang02'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                    <option value="GR" <?=$providerData['lang02'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-sm-4">
-                    <?php
-                    $x = 1;
-                    $str = '';
 
-                    while($x <= 9) {
-                      if (!empty($providerData['lang' . '0' . $x])){
-                        $str .= $providerData['lang' . '0' . $x] . '<br>';
-                      }
-                      $x++;
-                    }
-                    echo $str;
-                    ?>
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Language 3</p>
+                  <select class="form-control" name="lang03" id="lang03">
+                    <option value="">Select</option>
+                    <option value="EN" <?=$providerData['lang03'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                    <option value="SP" <?=$providerData['lang03'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                    <option value="GR" <?=$providerData['lang03'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Language 4</p>
+                  <select class="form-control" name="lang04" id="lang04">
+                    <option value="">Select</option>
+                    <option value="EN" <?=$providerData['lang04'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                    <option value="SP" <?=$providerData['lang04'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                    <option value="GR" <?=$providerData['lang04'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+
+                  </select>
+                </div>
               </div>
 
             </div>
