@@ -49,6 +49,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li <?=setActive("index")?>><a href="index.php">Provider Details</a></li>
+            <li <?=setActive("index2")?>><a href="index2.php">Provider Details (with panels)</a></li>
             <li <?=setActive("resetdemo")?>><a href="resetdemo.php">Reset Demo</a></li>
           </ul>
         </div><!--/.nav-collapse -->
