@@ -90,19 +90,21 @@ require_once ("assets/includes/header.php");
       <div class="page-header">
         <h3>Current User: <?php echo $providerData['first_name'] . ' ' . $providerData['last_name']; ?></h3>
       </div>
-      <p class="bg-success"><?php echo $msg ?></p>
-      <p class="lead">Provider Details</p>
-      <div class="container">
 
+      <div class="container">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <p class="bg-info"><?php echo $msg ?></p>
+          </div>
+        </div>
 
           <form method="post" class="form">
             <!-- Group 1 -->
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="panel panel-default">
+                  <div class="panel panel-primary">
                     <div class="panel-heading clearfix">
-                      <i class="icon-calendar"></i>
-                      <h3 class="panel-title">Input Group 1</h3>
+                      <h3 class="panel-title">Provider Name</h3>
                     </div>
 
                     <div class="panel-body">
@@ -138,10 +140,9 @@ require_once ("assets/includes/header.php");
               <!-- Group 2 -->
               <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                       <div class="panel-heading clearfix">
-                        <i class="icon-calendar"></i>
-                        <h3 class="panel-title">Input Group 2</h3>
+                        <h3 class="panel-title">Address</h3>
                       </div>
 
                       <div class="panel-body">
@@ -166,7 +167,7 @@ require_once ("assets/includes/header.php");
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-lg-6 col-sm-6">
+                          <div class="col-lg-4 col-sm-4">
                             <div class="input-group">
                               <label for="address1" class="form-control-label">State</label>
                               <select class="form-control input-sm" name="state" id="state">
@@ -175,7 +176,7 @@ require_once ("assets/includes/header.php");
                               </select>
                             </div>
                           </div>
-                          <div class="col-lg-6 col-sm-6">
+                          <div class="col-lg-4 col-sm-4">
                             <div class="input-group">
                               <label for="address2" class="form-control-label">Zip Code</label>
                                 <input type="text" class="form-control input-sm" name="zip" id="zip" value="<?php echo $providerData['zip']?>" placeholder="Zip Code">
@@ -190,10 +191,9 @@ require_once ("assets/includes/header.php");
                 <!-- Group 3 -->
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="panel panel-default">
+                      <div class="panel panel-primary">
                         <div class="panel-heading clearfix">
-                          <i class="icon-calendar"></i>
-                          <h3 class="panel-title">Input Group 3</h3>
+                          <h3 class="panel-title">Contact</h3>
                         </div>
 
                         <div class="panel-body">
@@ -225,7 +225,7 @@ require_once ("assets/includes/header.php");
                             <div class="col-lg-6 col-sm-6">
                               <div class="input-group">
                                 <label for="website" class="form-control-label">Web Site</label>
-                                
+
                                 <input type="text" class="form-control input-sm" name="website" id="website" value="<?php echo $providerData['website']?>" placeholder="Web Site URL">
                               </div>
                             </div>
@@ -235,102 +235,103 @@ require_once ("assets/includes/header.php");
                     </div>
                   </div>
 
+            <!--Group 4-->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading clearfix">
+                      <h3 class="panel-title">Accessibility</h3>
+                    </div>
 
-            <div class="form-group row">
-              <label class="col-sm-2">Handicap Accessible</label>
-              <div class="col-sm-2">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="handicapAccessible" id="handicapAccessible1" value="Y" <?=$providerData['handicapAccessible'] == 'Y' ? 'checked' : '';?>>
-                    Yes
-                  </label>
+                    <div class="panel-body">
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="input-group">
+                            <label for="handicapAccessible" class="form-control-label">Handicap Accessible</label><br>
+                            <input type="radio" name="handicapAccessible" id="handicapAccessible1" value="Y" <?=$providerData['handicapAccessible'] == 'Y' ? 'checked' : '';?>>Yes
+                            <input type="radio" name="handicapAccessible" id="handicapAccessible2" value="N" <?=$providerData['handicapAccessible'] == 'N' ? 'checked' : '';?>>No
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="input-group">
+                            <label for="handicapAccessible" class="form-control-label">Welcoming New Patients</label><br>
+                            <input type="radio" name="newPatients" id="newPatients1" value="Y" <?=$providerData['newPatients'] == 'Y' ? 'checked' : '';?>>Yes
+                            <input type="radio" name="newPatients" id="newPatients2" value="N" <?=$providerData['newPatients'] == 'N' ? 'checked' : '';?>>No
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-2">
-                  <div class="radio">
-                  <label>
-                    <input type="radio" name="handicapAccessible" id="handicapAccessible2" value="N" <?=$providerData['handicapAccessible'] == 'N' ? 'checked' : '';?>>
-                    No
-                  </label>
-                </div>
               </div>
 
-              <label class="col-sm-2">Welcoming New Patients</label>
-              <div class="col-sm-2">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="newPatients" id="newPatients1" value="Y" <?=$providerData['newPatients'] == 'Y' ? 'checked' : '';?>>
-                    Yes
-                  </label>
+              <!-- Group 5 -->
+              <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading clearfix">
+
+                        <h3 class="panel-title">Languages</h3>
+                      </div>
+
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-lg-3 col-sm-3">
+                            <div class="input-group">
+                              <input type="hidden" name="action" value="update">
+                              <label for="lang01" class="form-control-label">Language 1</label>
+                              <select class="form-control" name="lang01" id="lang01">
+                                <option value="">Select</option>
+                                <option value="EN" <?=$providerData['lang01'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                                <option value="SP" <?=$providerData['lang01'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                                <option value="GR" <?=$providerData['lang01'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-sm-3">
+                            <div class="input-group">
+                              <label for="lang02" class="form-control-label">Language 2</label>
+                              <select class="form-control" name="lang02" id="lang02">
+                                <option value="">Select</option>
+                                <option value="EN" <?=$providerData['lang02'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                                <option value="SP" <?=$providerData['lang02'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                                <option value="GR" <?=$providerData['lang02'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-sm-3">
+                            <div class="input-group">
+                              <label for="lang03" class="form-control-label">Language 3</label>
+                              <select class="form-control" name="lang03" id="lang03">
+                                <option value="">Select</option>
+                                <option value="EN" <?=$providerData['lang03'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                                <option value="SP" <?=$providerData['lang03'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                                <option value="GR" <?=$providerData['lang03'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-sm-3">
+                            <div class="input-group">
+                              <label for="lang04" class="form-control-label">Language 4</label>
+                              <select class="form-control" name="lang04" id="lang04">
+                                <option value="">Select</option>
+                                <option value="EN" <?=$providerData['lang04'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
+                                <option value="SP" <?=$providerData['lang04'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
+                                <option value="GR" <?=$providerData['lang04'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-2">
-                  <div class="radio">
-                  <label>
-                    <input type="radio" name="newPatients" id="newPatients2" value="N" <?=$providerData['newPatients'] == 'N' ? 'checked' : '';?>>
-                    No
-                  </label>
-                </div>
-              </div>
 
-            </div>
+
 
             <div class="form-group row">
-              <label for="languages" class="col-sm-2 form-control-label">Languages:</label>
-              <div class="col-sm-2">
-                <div class="input-group">
-                  <p class="help-block">Language 1</p>
-                  <select class="form-control" name="lang01" id="lang01">
-                    <option value="">Select</option>
-                    <option value="EN" <?=$providerData['lang01'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
-                    <option value="SP" <?=$providerData['lang01'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
-                    <option value="GR" <?=$providerData['lang01'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div class="input-group">
-                  <p class="help-block">Language 2</p>
-                  <select class="form-control" name="lang02" id="lang02">
-                    <option value="">Select</option>
-                    <option value="EN" <?=$providerData['lang02'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
-                    <option value="SP" <?=$providerData['lang02'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
-                    <option value="GR" <?=$providerData['lang02'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div class="input-group">
-                  <p class="help-block">Language 3</p>
-                  <select class="form-control" name="lang03" id="lang03">
-                    <option value="">Select</option>
-                    <option value="EN" <?=$providerData['lang03'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
-                    <option value="SP" <?=$providerData['lang03'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
-                    <option value="GR" <?=$providerData['lang03'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
-
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-sm-2">
-                <div class="input-group">
-                  <p class="help-block">Language 4</p>
-                  <select class="form-control" name="lang04" id="lang04">
-                    <option value="">Select</option>
-                    <option value="EN" <?=$providerData['lang04'] == 'EN' ? ' selected="selected"' : '';?>>English</option>
-                    <option value="SP" <?=$providerData['lang04'] == 'SP' ? ' selected="selected"' : '';?>>Spanish</option>
-                    <option value="GR" <?=$providerData['lang04'] == 'GR' ? ' selected="selected"' : '';?>>German</option>
-
-                  </select>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="form-group row">
-              <div class="col-sm-offset-2 col-sm-10">
+              <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Confirm</button>
               </div>
             </div>
