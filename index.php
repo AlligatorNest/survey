@@ -17,6 +17,9 @@ if($_POST && isset($_POST['action']))
 
   if ($action == 'update') {
 
+    $accept ='';
+    $handicapAccessible = '';
+
     $first_name = $_POST["first_name"];
     $last_name = $_POST["last_name"];
     $sex = $_POST["sex"];
@@ -29,13 +32,17 @@ if($_POST && isset($_POST['action']))
     $lang02 = $_POST["lang02"];
     $lang03 = $_POST["lang03"];
     $lang04 = $_POST["lang04"];
-    $newPatients = $_POST["newPatients"];
+    $hosp01 = $_POST["hosp01"];
+    $hosp02 = $_POST["hosp02"];
+    $hosp03 = $_POST["hosp03"];
+    $hosp04 = $_POST["hosp04"];
     $phone_1 = $_POST["phone_1"];
     $phone_1_info = $_POST["phone_1_info"];
     $email = $_POST["email"];
     $website = $_POST["website"];
-    $handicapAccessible = $_POST["handicapAccessible"];
-
+    $specfix = $_POST["specfix"];
+    if (isset($_POST['accept'])) {$accept = $_POST["accept"];}
+    if (isset($_POST['handicapAccessible'])) {$handicapAccessible = $_POST["handicapAccessible"];}
 
     $data = Array (
     'first_name' => $first_name,
@@ -50,11 +57,16 @@ if($_POST && isset($_POST['action']))
     'lang02' => $lang02,
     'lang03' => $lang03,
     'lang04' => $lang04,
-    'newPatients' => $newPatients,
+    'hosp01' => $hosp01,
+    'hosp02' => $hosp02,
+    'hosp03' => $hosp03,
+    'hosp04' => $hosp04,
+    'accept' => $accept,
     'phone_1' => $phone_1,
     'phone_1_info' => $phone_1_info,
     'email' => $email,
     'website' => $website,
+    'specfix' => $specfix,
     'handicapAccessible' => $handicapAccessible,
     'moddate' => $db->now()
     );
@@ -111,10 +123,20 @@ require_once ("assets/includes/header.php");
 
             <div class="form-group row">
               <label for="sex" class="col-sm-2 form-control-label">Gender</label>
-              <div class="col-xs-2">
+              <div class="col-xs-4">
                 <select class="form-control input-sm" name="sex" id="sex">
                   <option value="M" <?=$providerData['sex'] == 'M' ? ' selected="selected"' : '';?>>M</option>
                   <option value="F" <?=$providerData['sex'] == 'F' ? ' selected="selected"' : '';?>>F</option>
+                </select>
+              </div>
+
+              <label for="sex" class="col-sm-2 form-control-label">Specialty</label>
+              <div class="col-xs-4">
+                <select class="form-control" name="specfix" id="specfix">
+                  <option value="">Select</option>
+                  <option value="Ophthalmic Plastic Reconstructive Surgery" <?=$providerData['specfix'] == 'Ophthalmic Plastic Reconstructive Surgery' ? ' selected="selected"' : '';?>>Ophthalmic Plastic Reconstructive Surgery</option>
+                  <option value="Radiation Oncology" <?=$providerData['specfix'] == 'Radiation Oncology' ? ' selected="selected"' : '';?>>Radiation Oncology</option>
+                  <option value="Dermatology" <?=$providerData['specfix'] == 'Dermatology' ? ' selected="selected"' : '';?>>Dermatology</option>
                 </select>
               </div>
             </div>
@@ -207,7 +229,7 @@ require_once ("assets/includes/header.php");
               <div class="col-sm-2">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="newPatients" id="newPatients1" value="Y" <?=$providerData['newPatients'] == 'Y' ? 'checked' : '';?>>
+                    <input type="radio" name="accept" id="accept1" value="Y" <?=$providerData['accept'] == 'Y' ? 'checked' : '';?>>
                     Yes
                   </label>
                   </div>
@@ -215,7 +237,7 @@ require_once ("assets/includes/header.php");
                 <div class="col-sm-2">
                   <div class="radio">
                   <label>
-                    <input type="radio" name="newPatients" id="newPatients2" value="N" <?=$providerData['newPatients'] == 'N' ? 'checked' : '';?>>
+                    <input type="radio" name="accept" id="accept2" value="N" <?=$providerData['accept'] == 'N' ? 'checked' : '';?>>
                     No
                   </label>
                 </div>
@@ -223,6 +245,7 @@ require_once ("assets/includes/header.php");
 
             </div>
 
+            <!--Launguages-->
             <div class="form-group row">
               <label for="languages" class="col-sm-2 form-control-label">Languages:</label>
               <div class="col-sm-2">
@@ -274,7 +297,62 @@ require_once ("assets/includes/header.php");
                   </select>
                 </div>
               </div>
+            </div>
 
+            <!--Hospitals-->
+            <div class="form-group row">
+              <label for="languages" class="col-sm-2 form-control-label">Hospital Affiliations:</label>
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Hospital 1</p>
+                  <select class="form-control" name="hosp01" id="hosp01">
+                    <option value="">Select</option>
+                    <option value="OCHSNER BAPTIST MED CT" <?=$providerData['hosp01'] == 'OCHSNER BAPTIST MED CT' ? ' selected="selected"' : '';?>>OCHSNER BAPTIST MED CT</option>
+                    <option value="CHILDRENS HOSPITAL" <?=$providerData['hosp01'] == 'CHILDRENS HOSPITAL' ? ' selected="selected"' : '';?>>CHILDRENS HOSPITAL</option>
+                    <option value="EAST JEFFERSON HOSPITAL" <?=$providerData['hosp01'] == 'EAST JEFFERSON HOSPITAL' ? ' selected="selected"' : '';?>>EAST JEFFERSON HOSPITAL</option>
+                    <option value="THIBODAUX REGIONAL" <?=$providerData['hosp01'] == 'THIBODAUX REGIONAL' ? ' selected="selected"' : '';?>>THIBODAUX REGIONAL</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Hospital 2</p>
+                  <select class="form-control" name="hosp02" id="hosp02">
+                    <option value="">Select</option>
+                    <option value="OCHSNER BAPTIST MED CT" <?=$providerData['hosp02'] == 'OCHSNER BAPTIST MED CT' ? ' selected="selected"' : '';?>>OCHSNER BAPTIST MED CT</option>
+                    <option value="CHILDRENS HOSPITAL" <?=$providerData['hosp02'] == 'CHILDRENS HOSPITAL' ? ' selected="selected"' : '';?>>CHILDRENS HOSPITAL</option>
+                    <option value="EAST JEFFERSON HOSPITAL" <?=$providerData['hosp02'] == 'EAST JEFFERSON HOSPITAL' ? ' selected="selected"' : '';?>>EAST JEFFERSON HOSPITAL</option>
+                    <option value="THIBODAUX REGIONAL" <?=$providerData['hosp02'] == 'THIBODAUX REGIONAL' ? ' selected="selected"' : '';?>>THIBODAUX REGIONAL</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Hospital 3</p>
+                  <select class="form-control" name="hosp03" id="hosp03">
+                    <option value="">Select</option>
+                    <option value="OCHSNER BAPTIST MED CT" <?=$providerData['hosp03'] == 'OCHSNER BAPTIST MED CT' ? ' selected="selected"' : '';?>>OCHSNER BAPTIST MED CT</option>
+                    <option value="CHILDRENS HOSPITAL" <?=$providerData['hosp03'] == 'CHILDRENS HOSPITAL' ? ' selected="selected"' : '';?>>CHILDRENS HOSPITAL</option>
+                    <option value="EAST JEFFERSON HOSPITAL" <?=$providerData['hosp03'] == 'EAST JEFFERSON HOSPITAL' ? ' selected="selected"' : '';?>>EAST JEFFERSON HOSPITAL</option>
+                    <option value="THIBODAUX REGIONAL" <?=$providerData['hosp03'] == 'THIBODAUX REGIONAL' ? ' selected="selected"' : '';?>>THIBODAUX REGIONAL</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-sm-2">
+                <div class="input-group">
+                  <p class="help-block">Hospital 4</p>
+                  <select class="form-control" name="hosp04" id="hosp04">
+                    <option value="">Select</option>
+                    <option value="OCHSNER BAPTIST MED CT" <?=$providerData['hosp04'] == 'OCHSNER BAPTIST MED CT' ? ' selected="selected"' : '';?>>OCHSNER BAPTIST MED CT</option>
+                    <option value="CHILDRENS HOSPITAL" <?=$providerData['hosp04'] == 'CHILDRENS HOSPITAL' ? ' selected="selected"' : '';?>>CHILDRENS HOSPITAL</option>
+                    <option value="EAST JEFFERSON HOSPITAL" <?=$providerData['hosp04'] == 'EAST JEFFERSON HOSPITAL' ? ' selected="selected"' : '';?>>EAST JEFFERSON HOSPITAL</option>
+                    <option value="THIBODAUX REGIONAL" <?=$providerData['hosp04'] == 'THIBODAUX REGIONAL' ? ' selected="selected"' : '';?>>THIBODAUX REGIONAL</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div class="form-group row">

@@ -17,6 +17,9 @@ if($_POST && isset($_POST['action']))
 
   if ($action == 'update') {
 
+    $accept ='';
+    $handicapAccessible = '';
+
     $first_name = $_POST["first_name"];
     $last_name = $_POST["last_name"];
     $sex = $_POST["sex"];
@@ -29,12 +32,14 @@ if($_POST && isset($_POST['action']))
     $lang02 = $_POST["lang02"];
     $lang03 = $_POST["lang03"];
     $lang04 = $_POST["lang04"];
-    $newPatients = $_POST["newPatients"];
     $phone_1 = $_POST["phone_1"];
     $phone_1_info = $_POST["phone_1_info"];
     $email = $_POST["email"];
     $website = $_POST["website"];
-    $handicapAccessible = $_POST["handicapAccessible"];
+    $specfix = $_POST["specfix"];
+
+    if (isset($_POST['accept'])) {$accept = $_POST["accept"];}
+    if (isset($_POST['handicapAccessible'])) {$handicapAccessible = $_POST["handicapAccessible"];}
 
 
     $data = Array (
@@ -50,7 +55,7 @@ if($_POST && isset($_POST['action']))
     'lang02' => $lang02,
     'lang03' => $lang03,
     'lang04' => $lang04,
-    'newPatients' => $newPatients,
+    'accept' => $accept,
     'phone_1' => $phone_1,
     'phone_1_info' => $phone_1_info,
     'email' => $email,
@@ -271,8 +276,8 @@ require_once ("assets/includes/header.php");
                           <div class="col-lg-6 col-sm-6">
                             <div class="input-group">
                               <label for="handicapAccessible" class="form-control-label">Welcoming New Patients</label><br>
-                              <input type="radio" name="newPatients" id="newPatients1" value="Y" <?=$providerData['newPatients'] == 'Y' ? 'checked' : '';?>>Yes
-                              <input type="radio" name="newPatients" id="newPatients2" value="N" <?=$providerData['newPatients'] == 'N' ? 'checked' : '';?>>No
+                              <input type="radio" name="accept" id="accept1" value="Y" <?=$providerData['accept'] == 'Y' ? 'checked' : '';?>>Yes
+                              <input type="radio" name="accept" id="accept2" value="N" <?=$providerData['accept'] == 'N' ? 'checked' : '';?>>No
                             </div>
                           </div>
 

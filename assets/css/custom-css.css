@@ -70,3 +70,10 @@ code {
     color: #fff;
     background-color: #AFD7DC;
 }
+
+
+.panel-primary>.panel-heading  {
+
+    background-color: #000;
+
+}
